@@ -20,24 +20,24 @@ var connection = mysql.createConnection({
     start();
   });
 
-  function start (){
+  function start() {
       inquirer.prompt({
-          name: options,
+          name: "options",
           type: "list" ,
           message: "What would you like to do?",
           choices: ["View Products for Sale", "View Low Inventory", "Add to Inventory", "Add New Product"]
       })
-      .then(function(res){
-          if (res.options === "View Products for Sale"){
+      .then(function(answer){
+          if (answer.options === "View Products for Sale"){
               viewProducts();
           }
-          else if(res.options === "View Low Inventory"){
+          else if(answer.options === "View Low Inventory"){
               viewInventory();
           }
-          else if(res.options === "Add to Inventory"){
+          else if(answer.options === "Add to Inventory"){
               addInventory();
           }
-          else if(res.options === "Add New Product"){
+          else if(answer.options === "Add New Product"){
               addProduct();
           } else{
               connection.end();
@@ -45,3 +45,14 @@ var connection = mysql.createConnection({
 
       });
   }
+
+  function viewProducts(){
+      //query database for viewing all items
+    connection.query("SELECT * FROM products", function(err, res) {
+        if (err) throw err;
+        console.log(res);
+        connection.end();
+      });      
+  }
+
+  
