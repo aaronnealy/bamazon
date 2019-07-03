@@ -54,5 +54,14 @@ var connection = mysql.createConnection({
         connection.end();
       });      
   }
+ 
+//function to view inventory with a quantity lower than 5
+  function viewInventory(){
+        connection.query("SELECT name, quantity FROM products WHERE quantity <= 5", function(err, res) {
+            if(err)throw err;
+            console.log(res);
+      })
+    }
+
 
   
